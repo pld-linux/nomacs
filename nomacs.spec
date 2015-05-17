@@ -1,3 +1,4 @@
+%define	qtver	4.7.0
 Summary:	Lightweight image viewer
 Name:		nomacs
 Version:	2.4.4
@@ -6,9 +7,9 @@ License:	GPL v3+
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/nomacs/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	88c1e2f9adc37bbd4c2fbbc4b7aabd37
-Source1:	nomacs.appdata.xml
+Source1:	%{name}.appdata.xml
 URL:		http://nomacs.org/
-BuildRequires:	QtGui-devel >= 4.7
+BuildRequires:	QtGui-devel >= %{qtver}
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
 BuildRequires:	dos2unix
@@ -17,6 +18,8 @@ BuildRequires:	libraw-devel >= 0.12.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libwebp-devel >= 0.3.1
 BuildRequires:	opencv-devel >= 2.1.0
+BuildRequires:	pkgconfig
+BuildRequires:	qt4-qmake >= %{qtver}
 BuildRequires:	quazip-devel >= 0.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
