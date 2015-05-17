@@ -9,7 +9,9 @@ Source0:	http://downloads.sourceforge.net/nomacs/%{name}-%{version}-source.tar.b
 # Source0-md5:	88c1e2f9adc37bbd4c2fbbc4b7aabd37
 Source1:	%{name}.appdata.xml
 URL:		http://nomacs.org/
+BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
+BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
 BuildRequires:	dos2unix
@@ -19,6 +21,8 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libwebp-devel >= 0.3.1
 BuildRequires:	opencv-devel >= 2.1.0
 BuildRequires:	pkgconfig
+BuildRequires:	qt4-build >= %{qtver}
+BuildRequires:	qt4-linguist >= %{qtver}
 BuildRequires:	qt4-qmake >= %{qtver}
 BuildRequires:	quazip-devel >= 0.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
