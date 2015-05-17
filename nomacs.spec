@@ -41,8 +41,6 @@ rm -r 3rdparty/quazip-0.7
 install -d build
 cd build
 %cmake \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_CXX_FLAGS_RELEASE:STRING="-O2" \
 	-DENABLE_RAW=1 \
 	-DUSE_SYSTEM_WEBP=ON \
 	-DUSE_SYSTEM_QUAZIP=ON \
