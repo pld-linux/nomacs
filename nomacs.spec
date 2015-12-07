@@ -8,7 +8,7 @@ Summary:	Lightweight image viewer
 Summary(pl.UTF-8):	Lekka przeglądarka obrazków
 Name:		nomacs
 Version:	2.4.6
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/nomacs/%{name}-%{version}-source.tar.bz2
