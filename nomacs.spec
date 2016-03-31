@@ -1,19 +1,16 @@
 # TODO: system qpsd (http://sourceforge.net/projects/libqpsd/)
 #
-# Conditional build:
-%bcond_with	qt5	# use Qt 5 instead of 4
-#
-%define	qt4_ver	4.7.0
 Summary:	Lightweight image viewer
 Summary(pl.UTF-8):	Lekka przeglądarka obrazków
 Name:		nomacs
-Version:	2.4.6
-Release:	3
+Version:	3.0.0
+Release:	0.1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://downloads.sourceforge.net/nomacs/%{name}-%{version}-source.tar.bz2
-# Source0-md5:	a154966dc5c1fed71279bc70d8078935
+Source0:	https://github.com/nomacs/nomacs/releases/download/%{version}/%{name}-%{version}-source.tar.bz2
+# Source0-md5:	e1630a4371d0e0f8aba9358ab20d43e5
 Source1:	%{name}.appdata.xml
+Patch0:		cmake.patch
 URL:		http://nomacs.org/
 BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
@@ -24,27 +21,18 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libwebp-devel >= 0.3.1
 BuildRequires:	opencv-devel >= 2.1.0
 BuildRequires:	pkgconfig
-%if %{with qt5}
 BuildRequires:	Qt5Core-devel >= 5
 BuildRequires:	Qt5Gui-devel >= 5
 BuildRequires:	Qt5Network-devel >= 5
+BuildRequires:	Qt5Concurrent-devel
 BuildRequires:	qt5-build >= 5
 BuildRequires:	qt5-linguist >= 5
 BuildRequires:	qt5-qmake >= 5
 BuildRequires:	quazip-qt5-devel >= 0.7
-%else
-BuildRequires:	QtCore-devel >= %{qt4_ver}
-BuildRequires:	QtGui-devel >= %{qt4_ver}
-BuildRequires:	QtNetwork-devel >= %{qt4_ver}
-BuildRequires:	qt4-build >= %{qt4_ver}
-BuildRequires:	qt4-linguist >= %{qt4_ver}
-BuildRequires:	qt4-qmake >= %{qt4_ver}
-BuildRequires:	quazip-devel >= 0.7
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-nomacs is image viewer based on Qt 4 library.
+nomacs is image viewer based on Qt library.
 
 nomacs is small, fast and able to handle the most common image
 formats. Additionally it is possible to synchronize multiple viewers
@@ -53,7 +41,7 @@ compare images and spot the differences e.g. schemes of architects to
 show the progress).
 
 %description -l pl.UTF-8
-nomacs to przeglądarka obrazków oparta na bibliotece Qt 4.
+nomacs to przeglądarka obrazków oparta na bibliotece Qt.
 
 nomacs jest mała, szybka i potrafi obsłużyć większość popularnych
 formatów obrazów. Ponadto możliwa jest synchronizacja wielu
@@ -63,6 +51,7 @@ np. projekty architektów w celu pokazania postępów.
 
 %prep
 %setup -q
+%patch0 -p1
 
 dos2unix Readme/*
 
@@ -73,7 +62,6 @@ dos2unix Readme/*
 install -d build
 cd build
 %cmake \
-	%{?with_qt5:-DENABLE_QT5} \
 	-DENABLE_RAW=1 \
 	-DUSE_SYSTEM_WEBP=ON \
 	-DUSE_SYSTEM_QUAZIP=ON \
