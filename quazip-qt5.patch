@@ -1,0 +1,76 @@
+--- nomacs-3.0.0/cmake/FindQuaZIP.cmake~	2015-12-17 11:01:42.000000000 +0100
++++ nomacs-3.0.0/cmake/FindQuaZIP.cmake	2016-04-16 18:23:10.391672184 +0200
+@@ -6,9 +6,9 @@
+ if(QUAZIP_INCLUDE_DIRECTORY AND QUAZIP_LIBRARIES)
+   set(QUAZIP_FOUND TRUE)
+ else()
+-  find_path(QUAZIP_INCLUDE_DIRECTORY NAMES quazip/quazip.h)
++  find_path(QUAZIP_INCLUDE_DIRECTORY NAMES quazip5/quazip.h)
+ 
+-  find_library(QUAZIP_LIBRARIES NAMES quazip)
++  find_library(QUAZIP_LIBRARIES NAMES quazip5)
+ 
+   include(FindPackageHandleStandardArgs)
+   find_package_handle_standard_args(QUAZIP DEFAULT_MSG QUAZIP_INCLUDE_DIRECTORY QUAZIP_LIBRARIES)
+--- nomacs-3.0.0/src/DkImageLoader.cpp~	2015-12-17 11:01:42.000000000 +0100
++++ nomacs-3.0.0/src/DkImageLoader.cpp	2016-04-16 18:26:05.820609479 +0200
+@@ -74,7 +74,7 @@
+ 
+ // quazip
+ #ifdef WITH_QUAZIP
+-#include <quazip/JlCompress.h>
++#include <quazip5/JlCompress.h>
+ #endif
+ 
+ // opencv
+@@ -2025,4 +2025,4 @@
+ 	return mCurrentImage->fileName();
+ }
+ 
+-}
+\ No newline at end of file
++}
+--- nomacs-3.0.0/src/DkBasicLoader.cpp~	2015-12-17 11:01:42.000000000 +0100
++++ nomacs-3.0.0/src/DkBasicLoader.cpp	2016-04-16 18:26:23.390836011 +0200
+@@ -51,7 +51,7 @@
+ 
+ // quazip
+ #ifdef WITH_QUAZIP
+-#include <quazip/JlCompress.h>
++#include <quazip5/JlCompress.h>
+ #endif
+ 
+ #ifdef WITH_WEBP
+--- nomacs-3.0.0/src/DkImageContainer.cpp~	2015-12-17 11:01:42.000000000 +0100
++++ nomacs-3.0.0/src/DkImageContainer.cpp	2016-04-16 18:26:39.697712795 +0200
+@@ -41,7 +41,7 @@
+ 
+ // quazip
+ #ifdef WITH_QUAZIP
+-#include <quazip/JlCompress.h>
++#include <quazip5/JlCompress.h>
+ #endif
+ #pragma warning(pop)		// no warnings from includes - end
+ 
+--- nomacs-3.0.0/src/DkDialog.cpp~	2015-12-17 11:01:42.000000000 +0100
++++ nomacs-3.0.0/src/DkDialog.cpp	2016-04-16 18:26:57.017935843 +0200
+@@ -92,7 +92,7 @@
+ 
+ // quazip
+ #ifdef WITH_QUAZIP
+-#include <quazip/JlCompress.h>
++#include <quazip5/JlCompress.h>
+ #endif
+ 
+ #pragma warning(pop)		// no warnings from includes - end
+--- nomacs-3.0.0/cmake/UnixBuildTarget.cmake~	2015-12-17 11:01:42.000000000 +0100
++++ nomacs-3.0.0/cmake/UnixBuildTarget.cmake	2016-04-16 18:44:12.575613004 +0200
+@@ -93,7 +93,7 @@
+ 		  
+   add_library(${DLL_NAME} SHARED ${NOMACS_SOURCES} ${NOMACS_UI} ${NOMACS_HEADERS} ${NOMACS_RC} ${LIBQPSD_SOURCES} ${LIBQPSD_HEADERS} ${WEBP_SOURCE}  ${QUAZIP_SOURCES} ${NOMACS_RESOURCES} ${NOMACS_RCC})
+   target_include_directories(${DLL_NAME} PRIVATE  ${OpenCV_INCLUDE_DIRS})
+-  target_link_libraries(${DLL_NAME} ${QT_LIBRARIES} ${EXIV2_LIBRARIES} ${LIBRAW_LIBRARIES} ${OpenCV_LIBRARIES} ${VERSION_LIB} ${TIFF_LIBRARIES} ${HUPNP_LIBS} ${HUPNPAV_LIBS} ${WEBP_LIBRARIES} ${WEBP_STATIC_LIBRARIES})
++  target_link_libraries(${DLL_NAME} ${QT_LIBRARIES} ${EXIV2_LIBRARIES} ${LIBRAW_LIBRARIES} ${OpenCV_LIBRARIES} ${VERSION_LIB} ${TIFF_LIBRARIES} ${HUPNP_LIBS} ${HUPNPAV_LIBS} ${QUAZIP_LIBRARIES} ${WEBP_LIBRARIES} ${WEBP_STATIC_LIBRARIES})
+   add_dependencies(${BINARY_NAME} ${DLL_NAME})
+   set_target_properties(${DLL_NAME} PROPERTIES PREFIX "")
+ 

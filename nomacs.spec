@@ -4,13 +4,14 @@ Summary:	Lightweight image viewer
 Summary(pl.UTF-8):	Lekka przeglądarka obrazków
 Name:		nomacs
 Version:	3.0.0
-Release:	0.1
+Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://github.com/nomacs/nomacs/releases/download/%{version}/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	e1630a4371d0e0f8aba9358ab20d43e5
 Source1:	%{name}.appdata.xml
 Patch0:		cmake.patch
+Patch1:		quazip-qt5.patch
 URL:		http://nomacs.org/
 BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
@@ -52,6 +53,7 @@ np. projekty architektów w celu pokazania postępów.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 dos2unix Readme/*
 
@@ -62,6 +64,7 @@ dos2unix Readme/*
 install -d build
 cd build
 %cmake \
+	-DENABLE_PLUGINS=ON \
 	-DENABLE_RAW=1 \
 	-DUSE_SYSTEM_WEBP=ON \
 	-DUSE_SYSTEM_QUAZIP=ON \
@@ -90,15 +93,18 @@ cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 %update_desktop_database
 
 %postun
+/sbin/ldconfig
 %update_desktop_database
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc Readme/{COPYRIGHT,LICENSE.OPENCV,README}
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_libdir}/libnomacslib.so
 %{_mandir}/man1/%{name}.1*
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/translations
