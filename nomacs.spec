@@ -1,5 +1,4 @@
-# TODO: system qpsd (http://sourceforge.net/projects/libqpsd/)
-#
+# TODO: add plugins (https://github.com/nomacs/nomacs-plugins/)
 Summary:	Lightweight image viewer
 Summary(pl.UTF-8):	Lekka przeglądarka obrazków
 Name:		nomacs
@@ -9,8 +8,8 @@ License:	GPL v3+
 Group:		X11/Applications
 Source0:	https://github.com/nomacs/nomacs/archive/%{version}/%{name}-%{version}-source.tar.gz
 # Source0-md5:	1daf7458717eb545b2da8534cff36d6e
-Source1:	%{name}.appdata.xml
 Patch0:		quazip-qt5.patch
+Patch1:		%{name}-libqpsd.patch
 URL:		http://nomacs.org/
 BuildRequires:	Qt5Concurrent-devel >= 5.2.1
 BuildRequires:	Qt5Core-devel >= 5.2.1
@@ -21,6 +20,7 @@ BuildRequires:	cmake >= 2.8
 BuildRequires:	desktop-file-utils
 BuildRequires:	dos2unix
 BuildRequires:	exiv2-devel >= 0.25
+BuildRequires:	libqpsd-qt5-devel
 BuildRequires:	libraw-devel >= 0.17
 BuildRequires:	libstdc++-devel >= 6:4.3
 BuildRequires:	libtiff-devel
@@ -63,10 +63,11 @@ np. projekty architektów w celu pokazania postępów.
 %setup -q
 cd ImageLounge
 %patch0 -p1
+%patch1 -p1
 
 dos2unix Readme/*
 
-%{__rm} -r 3rdparty/quazip-0.7
+%{__rm} -r 3rdparty/{libqpsd,quazip-0.7}
 
 %build
 install -d build
@@ -74,10 +75,9 @@ cd build
 %cmake ../ImageLounge \
 	-DENABLE_PLUGINS=ON \
 	-DENABLE_RAW=1 \
-	-DUSE_SYSTEM_WEBP=ON \
-	-DUSE_SYSTEM_QUAZIP=ON
-
-# TODO: -DUSE_SYSTEM_LIBQPSD=ON
+	-DUSE_SYSTEM_LIBQPSD=ON \
+	-DUSE_SYSTEM_QUAZIP=ON \
+	-DUSE_SYSTEM_WEBP=ON
 
 %{__make}
 
@@ -97,9 +97,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libnomacs*.so
 
 desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
-
-install -d $RPM_BUILD_ROOT%{_datadir}/appdata
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 %find_lang %{name} --with-qm --without-mo
 
