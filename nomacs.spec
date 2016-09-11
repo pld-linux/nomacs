@@ -36,7 +36,7 @@ Requires:	Qt5Core >= 5.2.1
 Requires:	Qt5Gui >= 5.2.1
 Requires:	Qt5Network >= 5.2.1
 Requires:	Qt5Svg >= 5.2.1
-Requires:	exiv2 >= 0.25
+Requires:	exiv2-libs >= 0.25
 Requires:	libraw >= 0.17
 Requires:	opencv >= 2.4.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
