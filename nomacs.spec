@@ -63,7 +63,7 @@ np. projekty architektów w celu pokazania postępów.
 %prep
 %setup -q
 cd ImageLounge
-%patch0 -p1
+%patch -P0 -p1
 
 %{__rm} -r 3rdparty/libqpsd
 
